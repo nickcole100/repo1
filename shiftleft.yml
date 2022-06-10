@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     env: 
       IMAGE_NAME: <image name>
-      PROJECT_KEY: <project key> # Set the desired project to run the cli scanning with
+      PROJECT_KEY: nctest
       CLI_VERSION: <cli version> # Orca CLI version
     
     steps:
@@ -28,4 +28,4 @@ jobs:
         ORCA_SECURITY_API_TOKEN: ${{ secrets.ORCA_SECURITY_API_TOKEN }}
       run: |
         set +e
-        docker run -e ORCA_SECURITY_API_TOKEN --rm -v /var/run/docker.sock:/var/run/docker.sock ghcr.io/orcasecurity/orca-cli:${CLI_VERSION} -p ${PROJECT_KEY} image scan ${IMAGE_NAME}
+        docker run -e ORCA_SECURITY_API_TOKEN --rm -v /var/run/docker.sock:/var/run/docker.sock ghcr.io/orcasecurity/orca-cli:${CLI_VERSION} -p ${{ secrets.ORCA_API_KEY }} ${PROJECT_KEY} image scan ${IMAGE_NAME}
